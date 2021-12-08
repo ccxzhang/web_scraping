@@ -17,13 +17,15 @@ SPLIT_PREFIX = 'split_urls'
 # See scrapy_vanilla.py for the meaning of this command.
 SCRAPY_RUN_CMD = "scrapy crawl schoolspider -a school_list="
 
-pool = multiprocessing.Pool(multiprocessing.cpu_count())
+if __name__ == "__main__":
+    
+    pool = multiprocessing.Pool(multiprocessing.cpu_count())
 
-list_files = ['./schools/spiders/' + file for file in os.listdir('./schools/spiders/') if file.startswith(SPLIT_PREFIX)]
+    list_files = ['./schools/spiders/' + file for file in os.listdir('./schools/spiders/') if file.startswith(SPLIT_PREFIX)]
 
-print(list_files)
+    print(list_files)
 
-pool.map(execute_scrapy_from_file.execute_scrapy_from_file, list_files)
+    pool.map(execute_scrapy_from_file.execute_scrapy_from_file, list_files)
 
-pool.close()
-pool.join()
+    pool.close()
+    pool.join()
